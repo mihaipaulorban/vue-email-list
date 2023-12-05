@@ -5,30 +5,55 @@ function getEmails() {
   const emailsContainer = document.getElementById("emailsContainer");
   const emailList = document.getElementById("emailList");
 
-  axios
-    .get("https://flynn.boolean.careers/exercises/api/random/mail")
-    .then(function (response) {
-      console.log("Risp API:", response);
+  // Uso un Set per memorizzare gli indirizzi unici per non generare loop
+  const uniqueEmails = new Set();
+  let attempts = 0;
 
-      const email = response.data.response;
-      if (email) {
-        // Ripete 10 volte l'indirizzo email
-        const emails = Array.from({ length: 10 }, () => email);
+  //   Numero massim di tentatici sempre per la questione dei loop
+  const maxAttempts = 20;
 
-        // Svuota la lista di prima se c'è
-        emailList.innerHTML = "";
+  function genRandomMail() {
+    axios
+      .get("https://flynn.boolean.careers/exercises/api/random/mail")
+      .then(function (response) {
+        console.log("Risposta API:", response); // Aggiungiamo un log della risposta
 
-        // Aggiungo ogni email alla lista
-        emails.forEach(function (email) {
-          const listItem = document.createElement("li");
-          listItem.textContent = email;
-          emailList.appendChild(listItem);
-        });
-      } else {
-        // Se non c'è un indirizzo email, richiamo getEmails() ancora
-        getEmails();
-      }
-    });
+        const email = response.data.response;
+        if (email) {
+          // Aggiunge l'email uniche al set sempre per evitare loop
+          uniqueEmails.add(email);
+        }
+
+        if (uniqueEmails.size < 10 && attempts < maxAttempts) {
+          attempts++;
+          genRandomMail();
+        } else {
+          if (uniqueEmails.size >= 10) {
+            const emails = Array.from(uniqueEmails);
+
+            // Svuoto la lista di prima se c'è
+            emailList.innerHTML = "";
+
+            // Aggiungo ogni email alla lista
+            emails.forEach(function (email) {
+              const listItem = document.createElement("li");
+              listItem.textContent = email;
+              emailList.appendChild(listItem);
+            });
+          } else {
+            // Stampo in console l'errore per le mail
+            console.log(
+              "Impossibile ottenere 10 email uniche dopo",
+              maxAttempts,
+              "tentativi."
+            );
+          }
+        }
+      });
+  }
+
+  // Chiamo la funzione per la mail unica
+  genRandomMail();
 }
 
 // Chiamata iniziale per generare le email
