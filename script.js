@@ -40,6 +40,9 @@ function getEmails() {
               listItem.textContent = email;
               emailList.appendChild(listItem);
             });
+
+            // Mostro la lista quando sono state generate tutte le email
+            emailsContainer.style.display = "block";
           } else {
             // Stampo in console l'errore per le mail
             console.log(

@@ -1,7 +1,76 @@
-#emailList {
-  list-style: none;
+/* RESET */
+
+body {
   padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Quicksand", sans-serif;
+  background-color: #f0e6ef;
 }
+
+/* Stili layout*/
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+p {
+  font-size: 35px;
+  color: #f0a6ca;
+}
+
 #emailList li {
   margin-bottom: 5px;
+  color: #fbcfe4;
+}
+
+#emailList {
+  font-size: 40px;
+  box-shadow: -1px 3px 10px 1px rgba(114, 114, 114, 0.92);
+  border-radius: 40px;
+  padding: 50px 90px;
+  background-color: #9c89b8;
+}
+
+/* Animazione titolo */
+
+@import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
+
+svg {
+  font-family: "Quicksand", sans-serif;
+  width: 100%;
+  height: 100%;
+}
+svg text {
+  animation: stroke 5s infinite alternate;
+  stroke-width: 2;
+  stroke: #9c89b8;
+  font-size: 70px;
+}
+@keyframes stroke {
+  0% {
+    fill: rgba(160, 107, 184, 0);
+    stroke: rgba(156, 137, 184, 1);
+    stroke-dashoffset: 25%;
+    stroke-dasharray: 0 50%;
+    stroke-width: 2;
+  }
+  70% {
+    fill: rgba(160, 107, 184, 0);
+    stroke: rgba(156, 137, 184, 1);
+  }
+  80% {
+    fill: rgba(160, 107, 184, 0);
+    stroke: rgba(156, 137, 184, 1);
+    stroke-width: 3;
+  }
+  100% {
+    fill: rgba(160, 107, 184, 1);
+    stroke: rgba(156, 137, 184, 0);
+    stroke-dashoffset: -25%;
+    stroke-dasharray: 50% 0;
+    stroke-width: 0;
+  }
 }
